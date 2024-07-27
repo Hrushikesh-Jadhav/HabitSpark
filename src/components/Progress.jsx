@@ -1,6 +1,6 @@
 import React from 'react'
 import Sidebar from './Sidebar'
-import Navbar3 from '../Navbar3'
+import Navbar3 from './Navbar3'
 import { Chart as ChartJS } from 'chart.js/auto'
 
 function Progress() {
