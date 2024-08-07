@@ -1,0 +1,77 @@
+// import React, { useEffect, useState } from 'react';
+// import axios from 'axios';
+// import { Bar } from 'react-chartjs-2';
+// import { Chart, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+// Chart.register(BarElement, CategoryScale, LinearScale);
+
+// const DailyChart = () => {
+//   const [data, setData] = useState({});
+
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       const response = await axios.get('http://localhost:5000/habits/completed/daily');
+//       setData({
+//         labels: ['Completed Habits'],
+//         datasets: [
+//           {
+//             label: 'Daily Completed Habits',
+//             data: [response.data.count],
+//             backgroundColor: 'rgba(75, 192, 192, 0.6)',
+//           },
+//         ],
+//       });
+//     };
+//     fetchData();
+//   }, []);
+
+//   return (
+//     <div className="w-full max-w-md mx-auto mt-8">
+//       <h2 className="text-xl font-semibold mb-4">Daily Completed Habits</h2>
+//       <Bar data={data} />
+//     </div>
+//   );
+// };
+
+// export default DailyChart;
+
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Bar } from 'react-chartjs-2';
+import { Chart, BarElement, CategoryScale, LinearScale } from 'chart.js';
+
+Chart.register(BarElement, CategoryScale, LinearScale);
+
+const DailyChart = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await axios.get('http://localhost:5000/habits/completed/daily');
+      setData({
+        labels: ['Completed Habits'],
+        datasets: [
+          {
+            label: 'Daily Completed Habits',
+            data: [response.data.count],
+            backgroundColor: 'rgba(75, 192, 192, 0.6)',
+          },
+        ],
+      });
+    };
+    fetchData();
+  }, []);
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <div className="bg-white rounded-3xl p-4 h-1/2 w-1/2 mt-20 mb-20">
+      <h2 className="text-xl font-semibold mb-4">Daily Completed Habits</h2>
+      <Bar data={data} />
+    </div>
+  );
+};
+
+export default DailyChart;
