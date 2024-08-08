@@ -22,7 +22,7 @@ const Home = () => {
     <div className='bg-[linear-gradient(-45deg,#081b29_0%,#0ef_100%)] w-full h-screen'>
       <Sidebar/>
         <Navbar/>
-        <div class="pt-10 pb-36 bg-[linear-gradient(-45deg,#081b29_0%,#0ef_100%)] pl-60 justify-center items-center">
+        <div className="pt-10 pb-36 bg-[linear-gradient(-45deg,#081b29_0%,#0ef_100%)] pl-60 justify-center items-center">
             <div className="bg-[#081b29] max-w-xl mx-auto mt-10 text-white p-8 rounded-md shadow-md">
               <h1 className="text-2xl text-white font-bold mb-4">Create Your Habits:</h1>
               <HabitForm fetchHabits={fetchHabits} />

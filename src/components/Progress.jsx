@@ -94,10 +94,10 @@ const App = () => {
   }, []);
 
   return (
-    <div class="bg-[linear-gradient(-45deg,#081b29_0%,#0ef_100%)] h-full w-full">
+    <div className="bg-[linear-gradient(-45deg,#081b29_0%,#0ef_100%)] h-full w-full">
       <Sidebar/>
         <Navbar3/>
-        <div class="h-full w-full flex flex-col pl-60 justify-center items-center">
+        <div className="h-full w-full flex flex-col pl-60 justify-center items-center">
           <DailyChart />
           <WeeklyChart />
           <MonthlyChart />
