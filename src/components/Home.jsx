@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import HabitForm from './HabitForm';
@@ -14,6 +13,11 @@ const Home = () => {
     setHabits(response.data);
   };
 
+  const archiveCompletedHabits = async () => {
+    await axios.post('http://localhost:5000/habits/archive');
+    fetchHabits();
+  };
+
   useEffect(() => {
     fetchHabits();
   }, []);
@@ -26,7 +30,17 @@ const Home = () => {
             <div className="bg-[#081b29] max-w-xl mx-auto mt-10 text-white p-8 rounded-md shadow-md">
               <h1 className="text-2xl text-white font-bold mb-4">Create Your Habits:</h1>
               <HabitForm fetchHabits={fetchHabits} />
-              <HabitList habits={habits} fetchHabits={fetchHabits} />
+              {habits.length > 0 ? (
+          <HabitList habits={habits} fetchHabits={fetchHabits} />
+        ) : (
+          <p>No habits to display</p>
+        )}
+        <button
+          onClick={archiveCompletedHabits}
+          className="w-full bg-blue-500 text-white p-2 rounded-md shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 mt-4"
+        >
+          Archive Completed Habits
+        </button>
             </div>
         </div>
     </div>  
@@ -34,61 +48,3 @@ const Home = () => {
 };
 
 export default Home
-
-// function Home() {
-//   const [todos, setTodos] = useState([])
-//   useEffect(() => {
-//     axios.get('http://localhost:3001/get')
-//     .then(result => setTodos(result.data))
-//     .catch(err => console.log(err))
-//   },[])
-
-//   const handleEdit = (id) =>{
-//     axios.put('http://localhost:3001/update/'+id)
-//     .then(result => {
-//       location.reload()
-//     })
-//     .catch(err => console.log(err))
-//   }
-
-//   const handleDelete = (id) => {
-//     axios.delete('http://localhost:3001/delete/'+id)
-//     .then(result => {
-//       location.reload()
-//     })
-//     .catch(err => console.log(err))
-//   }
-
-//   return (
-//     <div className='background'>
-//       <Sidebar/>
-//         <Navbar/>
-//           <div className='home'>
-//             <h1>Organise Your Habits</h1>
-//             <Create/>
-//             {
-//               todos.length === 0 
-//               ?
-//               <div><h2>No Record</h2></div>
-//               :
-//               todos.map(todo => (
-//                 <div className='task'>
-//                   <div className='checkbox' onClick={() => handleEdit(todo._id)}>
-//                     {todo.done ? 
-//                       <BsFillCheckCircleFill className='icons'></BsFillCheckCircleFill>
-//                     : <BsCircleFill className='icons'/>
-//                     }
-//                     <p className={todo.done ? "line_through" : ""}>{todo.task}</p>
-//                   </div>
-//                   <div>
-//                     <span><BsFillTrash3Fill className='icon' onClick={() => handleDelete(todo._id)}/></span>
-//                   </div>
-//                 </div>   
-//               ))
-//             }
-//           </div>
-//     </div>
-//   )
-// }
-
-// export default Home

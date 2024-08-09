@@ -1,63 +1,35 @@
-// import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import { Bar } from 'react-chartjs-2';
-// import { Chart, BarElement, CategoryScale, LinearScale } from 'chart.js';
-
-// Chart.register(BarElement, CategoryScale, LinearScale);
-
-// const DailyChart = () => {
-//   const [data, setData] = useState({});
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       const response = await axios.get('http://localhost:5000/habits/completed/daily');
-//       setData({
-//         labels: ['Completed Habits'],
-//         datasets: [
-//           {
-//             label: 'Daily Completed Habits',
-//             data: [response.data.count],
-//             backgroundColor: 'rgba(75, 192, 192, 0.6)',
-//           },
-//         ],
-//       });
-//     };
-//     fetchData();
-//   }, []);
-
-//   return (
-//     <div className="w-full max-w-md mx-auto mt-8">
-//       <h2 className="text-xl font-semibold mb-4">Daily Completed Habits</h2>
-//       <Bar data={data} />
-//     </div>
-//   );
-// };
-
-// export default DailyChart;
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bar } from 'react-chartjs-2';
-import { Chart, BarElement, CategoryScale, LinearScale } from 'chart.js';
+import { Doughnut } from 'react-chartjs-2';
+import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
-Chart.register(BarElement, CategoryScale, LinearScale);
+Chart.register(ArcElement, Tooltip, Legend);
 
 const DailyChart = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get('http://localhost:5000/habits/completed/daily');
-      setData({
-        labels: ['Completed Habits'],
-        datasets: [
-          {
-            label: 'Daily Completed Habits',
-            data: [response.data.count],
-            backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          },
-        ],
-      });
+      try {
+        const response = await axios.get('http://localhost:5000/habits/daily-status');
+
+        setData({
+          labels: ['Completed', 'Remaining'],
+          datasets: [
+            {
+              label: 'Daily Habit Status',
+              data: [response.data.completed, response.data.incomplete],
+              backgroundColor: [
+                'rgba(0, 0, 255, 0.6)', // Completed
+                'rgba(255, 99, 132, 0.6)',  // Remaining
+              ],
+              hoverOffset: 4
+            }
+          ]
+        });
+      } catch (error) {
+        console.error('Error fetching daily habit data:', error);
+      }
     };
     fetchData();
   }, []);
@@ -67,11 +39,12 @@ const DailyChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-3xl p-4 h-1/2 w-1/2 mt-20 mb-20">
-      <h2 className="text-xl font-semibold mb-4">Daily Completed Habits</h2>
-      <Bar data={data} />
+    <div className="bg-white rounded-3xl w-full max-w-md mx-auto mt-8 p-8">
+      <h2 className="text-xl font-semibold mb-4">Daily Habit Status</h2>
+      <Doughnut data={data} />
     </div>
   );
 };
 
 export default DailyChart;
+
