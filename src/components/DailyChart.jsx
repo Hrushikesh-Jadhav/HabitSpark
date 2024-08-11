@@ -39,7 +39,7 @@ const DailyChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-3xl w-full max-w-md mx-auto mt-8 p-8">
+    <div className="bg-white rounded-3xl w-fit ml-10 flex flex-col mt-20 p-8 xl:ml-60">
       <h2 className="text-xl font-semibold mb-4">Daily Habit Status</h2>
       <Doughnut data={data} />
     </div>

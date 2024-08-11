@@ -39,7 +39,7 @@ const WeeklyChart = () => {
   }
 
   return (
-    <div className="bg-white rounded-3xl p-4 h-1/2 w-1/2 my-20">
+    <div className="bg-white rounded-3xl w-fit ml-10 flex flex-col mt-20 p-8 xl:w-3/5 xl:ml-36">
       <h2 className="text-xl font-semibold mb-4">Weekly Completed Habits</h2>
       <Bar data={data} />
     </div>
